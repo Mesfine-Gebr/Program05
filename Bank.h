@@ -1,9 +1,9 @@
 #ifndef BANK_H_
 #define BANK_H_
 #include<queue>
-#include"bstree.h"
-#include"transaction.h"
-#include "account.h"
+#include"Bstree.h"
+#include"Transaction.h"
+#include "Account.h"
 #include<iostream>
 #include<fstream>
 #include<sstream>
