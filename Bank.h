@@ -22,6 +22,6 @@ public:
 
 private:
 	queue<Transaction> transactions_list_;
-	BSTree account_list_;
+	BSTree account_list_;  
 };
 #endif
