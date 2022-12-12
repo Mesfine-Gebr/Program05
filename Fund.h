@@ -1,6 +1,6 @@
 #ifndef FUND_H_	
 #define FUND_H_
-#include "transaction.h"
+#include "Transaction.h"
 #include <string>
 #include <vector>
 #include <iostream>
