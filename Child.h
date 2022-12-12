@@ -19,4 +19,5 @@ class Child
         string firstname;
         string lastname;
         int age;
+        double change;
 };
