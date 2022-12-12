@@ -9,6 +9,11 @@ BSTree::BSTree()
     size = 0;
 }
 
+BSTree::~BSTree()
+{
+    CleanUp();
+}
+
 bool BSTree::Insert(Account &account)
 {
     if (IsEmpty)
@@ -25,7 +30,7 @@ bool BSTree::Insert(Account &account)
         {
             if (curr->p_acct > account)
             {
-                if (curr->left)
+                if (!curr->left)
                 {
                     curr->left = new Node;
                     curr = curr->left;
@@ -41,7 +46,7 @@ bool BSTree::Insert(Account &account)
             }
             else
             {
-                if (curr->right)
+                if (!curr->right)
                 {
                     curr->right = new Node;
                     curr = curr->right;
@@ -58,9 +63,63 @@ bool BSTree::Insert(Account &account)
     }   //  end if/else
 }
 
-bool BSTree::Retrieve()
+bool BSTree::Retrieve(const int& account_id, Account*& account) const
+{
+    Node *curr = root;
+    while (size_)
+    {
+        if (curr->p_acct->userAccID > account_id)
+        curr = curr->left;
+        else if (curr->p_acct->userAccID < account_id)
+        curr = curr->right;
+        else
+        {
+            account = curr;
+            curr = nullptr;
+            return true;
+        }   //  end if/else if/else
+    }   //  end while (size_)
+}
+
+void BStree::CleanUp()
+{
+    DeleteNode(root);
+}
+
+void BSTree::Display()
+{
+    DisplayRecursively(root);
+}
 
 bool BSTree::IsEmpty()
 {
     return !root;
+}
+
+//  Helpers
+void DisplayRecursively(Node* node) const
+{
+    if (node->left)
+    DisplayRecursively(node->left);
+
+    cout << node->p_acct;
+
+    if (node->right)
+    DisplayRecursively(node->right);
+}
+
+void BSTree::DeleteNode(Node* curr)
+{
+    if(curr->left)
+    DeleteNode(curr->left);
+
+    if (curr->right)
+    DeleteNode(curr->right);
+
+    delete curr->p_acct;
+    curr->p_acct = nullptr;
+    curr->left = nullptr;
+    curr->right = nullptr;
+    delete curr;
+    curr = nullptr;
 }
