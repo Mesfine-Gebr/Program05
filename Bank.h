@@ -13,7 +13,7 @@ using namespace std;
 
 class Bank {
 public:
-	Bank();
+	Bank(const string& file_name);
 	~Bank();
 
 	bool ReadFile(const string& file_name);
