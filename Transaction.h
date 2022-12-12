@@ -1,5 +1,4 @@
-#ifndef TRANSACTION_H_
-#define TRANSACTION_H_
+#pragma once
 #include <iostream>
 #include <vector>
 #include <string>
@@ -48,5 +47,5 @@ private:
 	int fund_id_;
 	int destination_account_id_, destination_fund_id_; // To this account and this fund ID
 };
-#endif
+
 

@@ -4,6 +4,7 @@
 
 Account:: Account() {}
 
+// Constructor function fill up user information and fund type
 Account:: Account(string fName, string lName, int accID){
 
     firstName = fName;
@@ -30,17 +31,25 @@ void Account:: addAccount(int fundValue, int amount){
     arrFund[fundValue].addAmount(amount);
 }
 
+// Simllar account link together to withdraw the transaction if one account less desire amount share the remain amount fill up on the second account and then set balance.
 void Account:: similarAccount(int firstAccFund, int secondAccFund, int amountFund){
 
     if((arrFund[firstAccFund].getBalance() + arrFund[secondAccFund].getBalance()) >= amountFund) {   
 
         int currentBalance = arrFund[firstAccFund].getBalance();
+
         arrFund[firstAccFund].substractAmount(currentBalance);
+
         Transaction transactionHistory('W', getUserAccountID(), firstAccFund, currentBalance);
+
         arrFund[firstAccFund].recordTransaction(transactionHistory);
+
         amountFund = amountFund - currentBalance;
+
         arrFund[secondAccFund].substractAmount(amountFund);
+
         Transaction transactionHistroy01('W', getUserAccountID(), secondAccFund, amountFund);
+
         arrFund[secondAccFund].recordTransaction(transactionHistroy01);
 
     }
@@ -52,8 +61,11 @@ void Account:: similarAccount(int firstAccFund, int secondAccFund, int amountFun
             {
 
                 arrFund[firstAccFund].substractAmount(currBalance); 
+
                 Transaction trasnsactionHistroy_1('W', getUserAccountID(), firstAccFund, currBalance); 
+
                 arrFund[firstAccFund].recordTransaction(trasnsactionHistroy_1); 
+
                 amountFund = amountFund - currBalance;
             
             }
@@ -61,14 +73,18 @@ void Account:: similarAccount(int firstAccFund, int secondAccFund, int amountFun
             { 
 
                 arrFund[secondAccFund].substractAmount(amountFund); 
-                Transaction transactionHistroy('W', getUserAccountID(), secondAccFund, amountFund); 
+
+                Transaction transactionHistroy('W', getUserAccountID(), secondAccFund, amountFund);
+
                 arrFund[secondAccFund].recordTransaction(transactionHistroy); 
 
             }
             else {
 
                 cerr <<" ERROR: Insefficent Amount to make transaction"<<amountFund<< " "<<"on this account"<<firstName<< " "<< lastName<< " " <<getFundName(amountFund)<<endl;
+
                 Transaction transactionHistroy('W', getUserAccountID(), secondAccFund, amountFund); 
+
                 arrFund[secondAccFund].recordTransaction(transactionHistroy);  
 
             }
@@ -80,6 +96,7 @@ void Account:: similarAccount(int firstAccFund, int secondAccFund, int amountFun
 
 }
 
+// SubstractFund function help widthdraw of money each fund types and then check user balance. If user has sufficient balance make transaction and then substract the withdraw amount, otherwise display error message 
 bool Account:: substractFund( int tranVal, int amount, Transaction valTrans)
 {
 

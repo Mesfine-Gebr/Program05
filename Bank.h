@@ -1,5 +1,4 @@
-#ifndef BANK_H_
-#define BANK_H_
+#pragma once
 #include<queue>
 #include"Bstree.h"
 #include"Transaction.h"
@@ -24,4 +23,3 @@ private:
 	queue<Transaction> transactions_list_;
 	BSTree account_list_;  
 };
-#endif

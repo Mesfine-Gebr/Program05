@@ -1,5 +1,4 @@
-#ifndef BSTREE_H_	
-#define BSTREE_H_	
+#pragma once	
 #include <iostream>
 #include "account.h"
 using namespace std;
@@ -33,4 +32,4 @@ private:
 	void DisplayRecursively(Node* node) const;
 	void DeleteNode(Node* curr);
 };
-#endif
+

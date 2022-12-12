@@ -36,7 +36,7 @@ public:
     void setUserFundID(int fundValue);
     int getUserBalance(int fundValue) const;
     int getUserAccountID() const;
-    string getFundName(int fundValue);
+    string getFundName(int fundIdNum);
     string getUserFirstName() const;
     string getUserLastName() const;
     

@@ -1,5 +1,4 @@
-#ifndef FUND_H_	
-#define FUND_H_
+#pragma once
 #include "Transaction.h"
 #include <string>
 #include <vector>
@@ -30,5 +29,5 @@ private:
 	int balance_;
 	vector<Transaction> history_transaction_;
 };
-#endif
+
 
