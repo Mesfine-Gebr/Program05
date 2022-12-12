@@ -1,4 +1,4 @@
-#include "fund.h"
+#include "Fund.h"
 
 Fund::Fund() {
 	balance_ = 0;
