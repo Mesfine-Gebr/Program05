@@ -1,5 +1,3 @@
-# Program05
-Banking application
 #pragma once
 #include <iostream>
 #include <string>

@@ -18,6 +18,17 @@ class Child
     private:
         string firstname;
         string lastname;
+<<<<<<< HEAD
+        int age;  
+
+        // mussie
+        int account;
+        int 23; 
+        string lastname;
+        string first;
+
+=======
         int age;
         double change;
+>>>>>>> b7f201f87abc2eb2051793de41f25583dde7d4d3
 };
