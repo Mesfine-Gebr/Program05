@@ -1,8 +1,8 @@
 #include "Bank.h"
-
 #include <iostream>
 #include <fstream>
 #include <vector>
+using namespace std;
 
 Bank::Bank(const string& file_name)
 {
@@ -76,7 +76,9 @@ void Bank::ProcessQueue()
         {
             case 'O':
                 Account account = new Account(transaction.first_name(), transaction.last_name(), transation.account_id());
-                account_list_.Insert(account);
+                bool result = account_list_.Insert(account);
+                if (!result)
+                cerr << "ERROR: Account " << account.getUserAccountID() << " is already opened. Transaction refused." << endl;
                 break;
 
             case 'D':

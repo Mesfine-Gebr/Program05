@@ -44,7 +44,7 @@ bool BSTree::Insert(Account &account)
                 else
                 curr = curr->left;
             }
-            else
+            else if(curr->p_acct < account)
             {
                 if (!curr->right)
                 {
@@ -58,7 +58,12 @@ bool BSTree::Insert(Account &account)
                     return true;
                 }
                 else curr = curr->right;
-            }   //  end if/else
+            }
+            else
+            {
+                curr = nullptr;
+                return false;
+            }   //  end if/else if/else
         }   //  end while (size_)
     }   //  end if/else
 }
@@ -68,15 +73,20 @@ bool BSTree::Retrieve(const int& account_id, Account*& account) const
     Node *curr = root;
     while (size_)
     {
-        if (curr->p_acct->userAccID > account_id)
+        if (curr->p_acct.getUserAccountID() > account_id && curr->left)
         curr = curr->left;
-        else if (curr->p_acct->userAccID < account_id)
+        else if (curr->p_acct.getUserAccountID() < account_id && curr->right)
         curr = curr->right;
-        else
+        else if (curr->p_acct.getUserAccountID() == account_id)
         {
             account = curr;
             curr = nullptr;
             return true;
+        }
+        else
+        {
+            curr = nullptr;
+            return false;
         }   //  end if/else if/else
     }   //  end while (size_)
 }
