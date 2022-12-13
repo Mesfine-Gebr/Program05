@@ -31,6 +31,11 @@ void Account:: addAccount(int fundValue, int amount){
     arrFund[fundValue].addAmount(amount);
 }
 
+void Account:: substractAcc(int fundID, int amount){
+
+    
+}
+
 // Simllar account link together to withdraw the transaction if one account less desire amount share the remain amount fill up on the second account and then set balance.
 void Account:: similarAccount(int firstAccFund, int secondAccFund, int amountFund){
 
