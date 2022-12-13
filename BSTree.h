@@ -27,7 +27,6 @@ private:
 	int size_;
 
 	// Helpers
-	bool InsertRecursively(Node* curr, Account* p_account);
 	void DisplayRecursively(Node* node) const;
 	void DeleteNode(Node* curr);
 };
