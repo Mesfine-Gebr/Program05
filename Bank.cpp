@@ -124,7 +124,11 @@ void Bank::ProcessQueue()
             case 'T':
                 if (transaction.account_id() > 999 && transaction.account_id() < 10000)
                 {
-
+                    Account* initialAccount;
+                    Account* finalAccount;
+                    bool initial = account_list_.Retrieve(transaction.account_id(), initialAccount);
+                    bool final = account_list_.Retrieve(transaction.destination_account_id(), finalAccount);
+                    if (intial && final)
                 }
                 else
                 cerr << "ERROR: " << transaction.account_id() "is an invalid account ID. Transaction refused.(Account IDs must be 4 digits)" << endl;
