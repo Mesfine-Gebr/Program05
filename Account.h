@@ -39,6 +39,16 @@ public:
     string getFundName(int fundIdNum);
     string getUserFirstName() const;
     string getUserLastName() const;
+
+
+    //Overloading operator
+    Account& operator = (const Account &acc);
+    bool operator == (const Account &acc) const;
+    bool operator != (const Account &acc) const;
+    bool operator >= (const Account &acc) const;
+    bool operator <= (const Account &acc) const;
+    bool operator > (const Account &acc) const;
+    bool operator < (const Account &acc) const;
     
     // private Members data
 private:

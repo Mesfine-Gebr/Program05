@@ -277,6 +277,64 @@ string Account:: getFundName(int fundValue)
 
 }
 
+// Overloading operator function
+Account& Account:: operator = (const Account &acc)
+{
+
+    userAccID = acc.userAccID;
+    userFundID = acc.userFundID;
+    firstName = acc.firstName;
+    lastName = acc.lastName;
+
+    return *this;
+}
+
+bool Account:: operator == (const Account &acc) const 
+{
+
+    if(this->firstName == acc.firstName && this->lastName == acc.lastName && this->userAccID == acc.userAccID && this->userFundID == acc.userFundID)
+    {
+        return true;
+
+    }
+    else {
+
+        return false;
+    }
+}
+
+bool Account:: operator != (const Account &acc) const
+{
+
+    return !(*this == acc);
+
+}
+
+bool Account:: operator >= (const Account &acc) const
+ {
+
+    return (*this > acc || *this == acc);
+}
+
+bool Account:: operator <= (const Account &acc) const
+{
+
+    return (*this > acc || *this == acc);
+}
+
+ bool Account:: operator > (const Account &acc) const {
+
+    // do
+
+ }
+
+ bool Account:: operator < (const Account &acc) const {
+
+    // do
+
+ }
+
+
 ostream& operator<<(ostream &ost, Account &acctVal)
 {
 
