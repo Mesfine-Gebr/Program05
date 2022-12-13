@@ -16,6 +16,7 @@ public:
 	string fund_name() const;
 	int balance() const;
 	void set_fund_name(string fund_name); 
+    bool userBalanceCheck(int amountBalance);
 
     // Actions
 	bool Deposit(int amount);

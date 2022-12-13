@@ -16,7 +16,7 @@ Account:: Account(string fName, string lName, int accID){
 
     for(int f = 0; f < 10; f < f++){
 
-        arrFund[f].setName(listFundName[f]);
+        arrFund[f].set_fund_name(listFundName[f]);
     }                  
 }
 
@@ -28,48 +28,52 @@ int Account :: getUserAccountID() const {
 
 void Account:: addAccount(int fundValue, int amount){
 
-    arrFund[fundValue].addAmount(amount);
+    arrFund[fundValue].Deposit(amount);
 }
+
+
+
 
 void Account:: substractAcc(int fundID, int amount){
 
     arrFund[fundID].WithDraw(amount);
 }
 
+
 // Simllar account link together to withdraw the transaction if one account less desire amount share the remain amount fill up on the second account and then set balance.
 void Account:: similarAccount(int firstAccFund, int secondAccFund, int amountFund){
 
-    if((arrFund[firstAccFund].getBalance() + arrFund[secondAccFund].getBalance()) >= amountFund) {   
+    if((arrFund[firstAccFund].balance() + arrFund[secondAccFund].balance()) >= amountFund) {   
 
-        int currentBalance = arrFund[firstAccFund].getBalance();
+        int currentBalance = arrFund[firstAccFund].balance();
 
-        arrFund[firstAccFund].substractAmount(currentBalance);
+        arrFund[firstAccFund].WithDraw(currentBalance);
 
         Transaction transactionHistory('W', getUserAccountID(), firstAccFund, currentBalance);
 
-        arrFund[firstAccFund].recordTransaction(transactionHistory);
+        arrFund[firstAccFund].Log(transactionHistory);
 
         amountFund = amountFund - currentBalance;
 
-        arrFund[secondAccFund].substractAmount(amountFund);
+        arrFund[secondAccFund].WithDraw(amountFund);
 
         Transaction transactionHistroy01('W', getUserAccountID(), secondAccFund, amountFund);
 
-        arrFund[secondAccFund].recordTransaction(transactionHistroy01);
+        arrFund[secondAccFund].Log(transactionHistroy01);
 
     }
     else
     {
 
-            int currBalance = arrFund[firstAccFund].getBalance(); 
+            int currBalance = arrFund[firstAccFund].balance(); 
             if(currBalance > amountFund)
             {
 
-                arrFund[firstAccFund].substractAmount(currBalance); 
+                arrFund[firstAccFund].WithDraw(currBalance); 
 
                 Transaction trasnsactionHistroy_1('W', getUserAccountID(), firstAccFund, currBalance); 
 
-                arrFund[firstAccFund].recordTransaction(trasnsactionHistroy_1); 
+                arrFund[firstAccFund].Log(trasnsactionHistroy_1); 
 
                 amountFund = amountFund - currBalance;
             
@@ -77,11 +81,11 @@ void Account:: similarAccount(int firstAccFund, int secondAccFund, int amountFun
             if(arrFund[secondAccFund].userBalanceCheck(amountFund))
             { 
 
-                arrFund[secondAccFund].substractAmount(amountFund); 
+                arrFund[secondAccFund].WithDraw(amountFund); 
 
                 Transaction transactionHistroy('W', getUserAccountID(), secondAccFund, amountFund);
 
-                arrFund[secondAccFund].recordTransaction(transactionHistroy); 
+                arrFund[secondAccFund].Log(transactionHistroy); 
 
             }
             else {
@@ -90,7 +94,7 @@ void Account:: similarAccount(int firstAccFund, int secondAccFund, int amountFun
 
                 Transaction transactionHistroy('W', getUserAccountID(), secondAccFund, amountFund); 
 
-                arrFund[secondAccFund].recordTransaction(transactionHistroy);  
+                arrFund[secondAccFund].Log(transactionHistroy);  
 
             }
     
@@ -115,22 +119,25 @@ bool Account:: substractFund( int tranVal, int amount, Transaction valTrans)
             {
 
             arrFund[tranVal].userBalanceCheck(amount);
-            arrFund[tranVal].substractAmount(amount);
+            arrFund[tranVal].WithDraw(amount);
             return true;
 
             }
-            else if((arrFund[MONEY_MARKET].getBalance() + arrFund[PRIME_MONEY_MARKET].getBalance()) >= amount)
+            else if((arrFund[MONEY_MARKET].balance() + arrFund[PRIME_MONEY_MARKET].balance()) >= amount)
             {
 
                 if(tranVal == MONEY_MARKET)
                 {
 
                     similarAccount(MONEY_MARKET, PRIME_MONEY_MARKET, amount);
+                    return true;
 
                 }
                 else {
 
                     similarAccount(PRIME_MONEY_MARKET, MONEY_MARKET, amount);
+
+                    return false;
 
                 }
             }
@@ -142,11 +149,15 @@ bool Account:: substractFund( int tranVal, int amount, Transaction valTrans)
                 {
 
                     similarAccount(MONEY_MARKET, PRIME_MONEY_MARKET, amount);
+
+                    return true;
                 }
                 else
                 {
 
                     similarAccount(PRIME_MONEY_MARKET, MONEY_MARKET, amount);
+
+                    return false;
                 }
 
                 return false;
@@ -160,11 +171,11 @@ bool Account:: substractFund( int tranVal, int amount, Transaction valTrans)
             if(arrFund[tranVal].userBalanceCheck(amount))
             {
 
-                arrFund[tranVal].substractAmount(amount);
-                arrFund[tranVal].recordTransaction(valTrans);
+                arrFund[tranVal].WithDraw(amount);
+                arrFund[tranVal].Log(valTrans);
                 return true;
             }
-            else if (((arrFund[SHORT_TERM_BOUND].getBalance() + arrFund[LONG_TERM_BOUND].getBalance()) >= amount))
+            else if (((arrFund[SHORT_TERM_BOUND].balance() + arrFund[LONG_TERM_BOUND].balance()) >= amount))
             {
 
                 if(tranVal == LONG_TERM_BOUND) 
@@ -193,9 +204,11 @@ bool Account:: substractFund( int tranVal, int amount, Transaction valTrans)
                     similarAccount(SHORT_TERM_BOUND, LONG_TERM_BOUND, amount);
                 }
 
-                return false;
+                
             }
         }
+
+        return false;
 
     }
 
@@ -204,8 +217,8 @@ bool Account:: substractFund( int tranVal, int amount, Transaction valTrans)
         if(arrFund[tranVal].userBalanceCheck(amount))
         {
 
-            arrFund[tranVal].substractAmount(amount);
-            arrFund[tranVal].recordTransaction(valTrans);
+            arrFund[tranVal].WithDraw(amount);
+            arrFund[tranVal].Log(valTrans);
             return true;
         }
         else
@@ -217,8 +230,6 @@ bool Account:: substractFund( int tranVal, int amount, Transaction valTrans)
 
 
     }
-
-
         
 }
 
@@ -227,28 +238,28 @@ void Account:: displayError(int amount, string fName, string lName, int fundValu
 
 
     cerr << "ERROR: NOT Sufficient fund on this account"<< amount << "on this account "<< firstName <<" "<< lastName << " " << getFundName(fundValue) <<endl;
-    Transaction transctionHistroy('W', getUserAccountID(), fundValue, "Not valid account", amount ); 
-    arrFund[fundValue].recordTransaction(transctionHistroy); 
+    //Transaction transctionHistroy('W', getUserAccountID(), fundValue, "Not valid account", amount ); 
+    //arrFund[fundValue].Log(transctionHistroy); 
 
 }
 
 void Account:: transferRecord(Transaction tranAmount, int fundValueNum){
 
-    arrFund[fundValueNum].recordTransaction(tranAmount);
+    arrFund[fundValueNum].Log(tranAmount);
 }
 void Account:: printHistoryAccount(){
 
     cout << "Account Transaction Histroy " << firstName << " "<< lastName << " "<< "Transaction Fund date and amount" <<endl;
     for (int a = 0; a < 10; a++)
     {
-        arrFund[a].printHistroy();
+        arrFund[a].PrintAllHistory();
     }
 }
 
 void Account:: printHistoryFund(int fundIdNum){
 
     cout << " Account Transaction Histroy "<< firstName << " " << lastName << " " << getFundName(fundIdNum) << " $ "<<getUserBalance(fundIdNum) << endl;
-    arrFund[fundIdNum].printHistroyFund();
+    arrFund[fundIdNum].PrintAllHistory();
 
 }
 
@@ -260,7 +271,7 @@ void Account:: setUserFundID(int fundValue)
 
 int Account:: getUserBalance(int fundValue) const
 {
-    return arrFund[fundValue].getBalance();
+    return arrFund[fundValue].balance();
 
 }
 
@@ -278,7 +289,7 @@ string Account:: getUserFirstName() const
 string Account:: getFundName(int fundValue)
 {
 
-    return arrFund[fundValue].getName();
+    return arrFund[fundValue].fund_name();
 
 }
 
@@ -329,13 +340,26 @@ bool Account:: operator <= (const Account &acc) const
 
  bool Account:: operator > (const Account &acc) const {
 
-    // do
+    if(userAccID > acc.userAccID){
+
+        return true;
+    }
+    else {
+        return false;
+    }
+
 
  }
 
  bool Account:: operator < (const Account &acc) const {
 
-    // do
+    if(userAccID < acc.userAccID){
+
+        return true;
+    }
+    else {
+        return false;
+    }
 
  }
 

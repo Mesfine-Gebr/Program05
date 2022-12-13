@@ -1,6 +1,6 @@
 #pragma once	
 #include <iostream>
-#include "account.h"
+#include "Account.h"
 using namespace std;
 
 class BSTree {
@@ -27,6 +27,7 @@ private:
 	int size_;
 
 	// Helpers
+	bool InsertRecursively(Node* curr, Account* p_account);
 	void DisplayRecursively(Node* node) const;
 	void DeleteNode(Node* curr);
 };

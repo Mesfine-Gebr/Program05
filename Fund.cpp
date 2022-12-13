@@ -15,6 +15,19 @@ string Fund::fund_name() const {
 	return fund_name_;
 }
 
+bool Fund:: userBalanceCheck(int amountBalance){
+
+    if(balance_ > amountBalance){
+
+        return true;
+    }
+    else {
+
+        return false;
+    }
+
+}
+
 int Fund::balance() const {
 	return balance_;
 }

@@ -1,12 +1,13 @@
 #include "BSTree.h"
+#include "Account.h"
 
 #include <iostream>
 #include <stdlib.h>
 
 BSTree::BSTree()
 {
-    root = NULL;
-    size = 0;
+    root_ = NULL;
+    size_ = 0;
 }
 
 BSTree::~BSTree()
@@ -14,19 +15,21 @@ BSTree::~BSTree()
     CleanUp();
 }
 
-bool BSTree::Insert(Account &account)
+bool BSTree::Insert(Account* account)
 {
-    if (IsEmpty)
+    if (IsEmpty())
     {
-        root = new Node;
-        root->p_acct = account;
-        root->left = NULL;
-        root->right = NULL;
+        root_ = new Node;
+        root_->p_acct = account;
+        root_->left = NULL;
+        root_->right = NULL;
+        size_++;
+        return true;
     }
     else
     {
-        Node *curr = root;
-        while (size_)
+        Node *curr = root_;
+        while (!IsEmpty())
         {
             if (curr->p_acct > account)
             {
@@ -52,7 +55,7 @@ bool BSTree::Insert(Account &account)
                     curr = curr->right;
                     curr->p_acct = account;
                     curr->left = NULL;
-                    curr-right = NULL;
+                    curr->right = NULL;
                     curr = nullptr;
                     size_++;
                     return true;
@@ -66,20 +69,22 @@ bool BSTree::Insert(Account &account)
             }   //  end if/else if/else
         }   //  end while (size_)
     }   //  end if/else
+    return false;
 }
 
 bool BSTree::Retrieve(const int& account_id, Account*& account) const
 {
-    Node *curr = root;
-    while (size_)
+    Node *curr = root_;
+    while (!IsEmpty())
     {
-        if (curr->p_acct.getUserAccountID() > account_id && curr->left)
+        if (curr->p_acct->getUserAccountID() > account_id && curr->left)
         curr = curr->left;
-        else if (curr->p_acct.getUserAccountID() < account_id && curr->right)
+
+        else if (curr->p_acct->getUserAccountID() < account_id && curr->right)
         curr = curr->right;
-        else if (curr->p_acct.getUserAccountID() == account_id)
+        else if (curr->p_acct->getUserAccountID() == account_id)
         {
-            account = curr;
+            account = curr->p_acct;
             curr = nullptr;
             return true;
         }
@@ -89,25 +94,26 @@ bool BSTree::Retrieve(const int& account_id, Account*& account) const
             return false;
         }   //  end if/else if/else
     }   //  end while (size_)
+    return false;
 }
 
-void BStree::CleanUp()
+void BSTree::CleanUp()
 {
-    DeleteNode(root);
+    DeleteNode(root_);
 }
 
-void BSTree::Display()
+void BSTree::Display() const
 {
-    DisplayRecursively(root);
+    DisplayRecursively(root_);
 }
 
-bool BSTree::IsEmpty()
+bool BSTree::IsEmpty() const
 {
-    return !root;
+    return !root_;
 }
 
 //  Helpers
-void DisplayRecursively(Node* node) const
+void BSTree::DisplayRecursively(Node* node) const
 {
     if (node->left)
     DisplayRecursively(node->left);
