@@ -24,6 +24,8 @@ public:
 
     //Member Function declaration
     void addAccount(int fundValue, int amount);
+    
+    void substractAcc(int fundID, int amount);
     void transferRecord(Transaction tranAmount, int fundValueNum);
     bool substractFund( int tranVal, int amount, Transaction valTrans);
     void similarAccount(int firstAccFund, int secondAccFund, int amountFund);
