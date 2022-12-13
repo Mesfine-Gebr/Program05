@@ -33,7 +33,7 @@ void Account:: addAccount(int fundValue, int amount){
 
 void Account:: substractAcc(int fundID, int amount){
 
-    
+    arrFund[fundID].WithDraw(amount);
 }
 
 // Simllar account link together to withdraw the transaction if one account less desire amount share the remain amount fill up on the second account and then set balance.
