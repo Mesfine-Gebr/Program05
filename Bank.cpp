@@ -22,13 +22,16 @@ bool Bank::ReadFile(const string& file_name)
     ifstream fileReader(file_name);
     Transaction transaction;
 
+    //  Read file line by line
     while (getline (fileReader, text))
     {
         vector<string> v;
         ss = text;
+        //  Split line into separate strings and store in a vector
         while (getline(ss, vText, ' '))
         v.push_back(vText);
 
+        //  Creates transaction based on type
         switch (v[0])
         {
             case "O":
@@ -69,21 +72,87 @@ bool Bank::ReadFile(const string& file_name)
 void Bank::ProcessQueue()
 {
     Transaction transaction;
-    while (transactions_list_.empty())
+    while (transactions_list_.empty())  //  Until queue is empty
     {
         transaction = transactions_list_.pop();
         switch (transaction.type())
         {
             case 'O':
-                Account account = new Account(transaction.first_name(), transaction.last_name(), transation.account_id());
-                bool result = account_list_.Insert(account);
-                if (!result)
-                cerr << "ERROR: Account " << account.getUserAccountID() << " is already opened. Transaction refused." << endl;
+                if (transaction.account_id() > 999 && transaction.account_id() < 10000)
+                {
+                    Account account = new Account(transaction.first_name(), transaction.last_name(), transation.account_id());
+                    bool result = account_list_.Insert(account);
+                    if (!result)
+                    cerr << "ERROR: Account " << account.getUserAccountID() << " is already opened. Transaction refused." << endl;
+                }
+                else
+                cerr << "ERROR: " << transaction.account_id() "is an invalid account ID. Transaction refused.(Account IDs must be 4 digits)" << endl;
                 break;
 
             case 'D':
-                
-        }
-    }
+                if (transaction.account_id() > 999 && transaction.account_id() < 10000)
+                {
+                    Account* account;
+                    bool result = account_list_.Retrieve(transaction.account_id(), account)
+                    if (result)
+                    {
+                        account.transferRecord(transaction, transaction.fund_id());
+                        account.addAccount(transaction.fund_id(), transaction.amount());
+                    }
+                    else
+                    cerr << "ERROR: Account " << transaction.account_id() << " not found. Transaction refused." << endl;
+                }
+                else
+                cerr << "ERROR: " << transaction.account_id() "is an invalid account ID. Transaction refused.(Account IDs must be 4 digits)" << endl;
+                break;
+            
+            case 'W':
+                if (transaction.account_id() > 999 && transaction.account_id() < 10000)
+                {
+                    Account* account;
+                    bool result = account_list_.Retrieve(transaction.account_id(), account);
+                    if (result)
+                    account.substractFund(transaction.fund_id(), transaction.amount(), transaction);
+                    else
+                    cerr << "ERROR: Account " << account.getUserAccountID() << " not found. Transaction refused" << endl;
+                }
+                else
+                cerr << "ERROR: " << transaction.account_id() "is an invalid account ID. Transaction refused.(Account IDs must be 4 digits)" << endl;
+                break;
 
+            //  To-do
+            case 'T':
+                if (transaction.account_id() > 999 && transaction.account_id() < 10000)
+                {
+                    
+                }
+                else
+                cerr << "ERROR: " << transaction.account_id() "is an invalid account ID. Transaction refused.(Account IDs must be 4 digits)" << endl;
+                break;
+
+            case 'H':
+                if (transaction.account_id() > 999 && transaction.account_id() < 10000)
+                {
+                    Account* account;
+                    bool result = account_list_.Retrieve(transaction.account_id(), account);
+                    if (result)
+                    {
+                        if (transaction.fund_id() < 0)
+                        account.printHistoryAccount();
+                        else
+                        account.printHistoryFund(transaction.fund_id());
+                    }
+                    else
+                    cerr << "ERROR: Account " << account.getUserAccountID() << " not found. Transaction refused" << endl;
+                }
+                else
+                cerr << "ERROR: " << transaction.account_id() "is an invalid account ID. Transaction refused.(Account IDs must be 4 digits)" << endl;
+                break;
+        }   //  end switch (transaction.type())
+    }   //  end while (transactions_list_.empty())
+}
+
+void BSTree Display()
+{
+    account_list_.Display();
 }

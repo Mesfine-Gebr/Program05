@@ -7,6 +7,7 @@ Transaction::Transaction() {
 Transaction::Transaction(char type, int account_id) {
 	this->type_ = type;
 	this->account_id_ = account_id;
+	this->fund_id_ = -1;
 }
 
 // Open account

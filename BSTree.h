@@ -13,7 +13,6 @@ public:
 
 	bool Insert(Account* account);
 	bool Retrieve(const int& account_id, Account*& account) const; // Find the account in tree
-	bool Delete(const int& account_id, Account*& account); 
 	bool IsEmpty() const;
 	void CleanUp();
 	void Display() const;
