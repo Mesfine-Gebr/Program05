@@ -124,7 +124,7 @@ void Bank::ProcessQueue()
             case 'T':
                 if (transaction.account_id() > 999 && transaction.account_id() < 10000)
                 {
-                    
+
                 }
                 else
                 cerr << "ERROR: " << transaction.account_id() "is an invalid account ID. Transaction refused.(Account IDs must be 4 digits)" << endl;
